@@ -1,0 +1,88 @@
+\documentclass[11pt]{report}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{Sweave}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{anysize} 
+\marginsize{1.78cm}{1.65cm}{1.78cm}{1.78cm} 
+
+\title{\Huge Universidad Nacional de Loja \\ 
+Área de la Energía las Industrias y los Recursos Naturales no Renovables \\
+Ingeniería en Sistemas \\}
+
+\author{\includegraphics[width=5cm, height=5cm]{unl.jpg} \\\\\\\\
+Antonio Aguilar Soto \\ waaguilars@unl.edu.ec \\\\
+ECINF7224}\\\\
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+\begin{center}\textbf{ROCK DATASET}\end{center}
+\textbf{Descripción}
+
+El (aproximadamente) calificación trimestral aprobación para el Presidente de los Estados Unidos a partir del primer trimestre de 1945 hasta el último trimestre de 1.974.\\
+\textbf{Uso:}
+presidents
+\\
+\textbf{Formato}
+
+Una serie de tiempo de 120 valores.
+\textbf{Detalles}
+
+Los datos son en realidad una versión amañadas de los índices de aprobación. Ver el libro de McNeil para más detalles.
+\\
+\textbf{Fuente}
+La Organización Gallup.
+\\
+\textbf{Referencia}
+McNeil, DR (1977) Análisis de Datos Interactivo. Nueva York: Wiley.
+\\\\
+\textbf{Determinar la estadística, cuando presidents son mayores a 1960.}
+
+<<eval=TRUE, echo=FALSE>>=
+require(utils)
+a <- matrix(presidents)
+b <- a[c(65:120)]
+summary(b)
+#suma <- as.matrix(presidents, 65)
+#suma
+#length(suma)
+#summary(suma)
+?"matrix"
+@
+\\\\\\
+\textbf{Determinar la estadística, cuando Qtr4 menores a 70 y mayores a 50, Cuál es el 3erQ?}
+
+<<eval=TRUE, echo=FALSE>>=
+a <- matrix(presidents)
+q4 <- c(a[seq(4, 120, by=4)])
+q44 <- q4 < 70 & q4 > 50
+summary(q44)
+quantile(q4, .75, na.rm = TRUE)
+@
+\\\\\\
+\textbf{ Determinar la estadística, cuando Qtr3 y Qtr4 están asignación (NA)}
+
+<<eval=TRUE, echo=FALSE>>=
+a <- matrix(presidents)
+q3 <- c(a[seq(3, 119, by=4)])
+q4 <- c(a[seq(4, 120, by=4)])
+summary(q3)
+summary(q4)
+summary(q3 + q4)
+@
+\\\\\\
+\textbf{Graficar Qtr1 Vs Qtr2, cuando Qtr2 no tiene asignación.}
+
+<<eval=TRUE, fig=TRUE, echo=FALSE>>=
+a <- matrix(presidents)
+q1 <- c(a[seq(3, 117, by=4)])
+q2 <- c(a[seq(2, 118, by=4)])
+barplot(q1, q2, xlab = "Qtr1 vs Qtr2")
+@
+\\\\\\
+
+\includegraphics[width=3cm, height=2cm]{licencia.png}
+\end{document}}
